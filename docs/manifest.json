@@ -1,0 +1,18 @@
+{
+  "name": "British Club Padel Section",
+  "short_name": "BC Padel",
+  "description": "British Club Singapore — Padel Section booking and scheduling",
+  "start_url": "/padel/",
+  "scope": "/padel/",
+  "display": "standalone",
+  "background_color": "#1B2A6B",
+  "theme_color": "#1B2A6B",
+  "icons": [
+    {
+      "src": "bcss.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
