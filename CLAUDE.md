@@ -37,10 +37,12 @@ Update this file after every non-trivial change.
 ## Setup checklist
 
 - [x] Create Supabase project
-- [ ] Run `db/schema-supabase.sql` in SQL editor
-- [ ] Run `db/schema-hof.sql` in SQL editor
-- [ ] Run `db/schema-audit.sql` in SQL editor
+- [x] Run `db/schema-supabase.sql` in SQL editor
+- [x] Run `db/schema-hof.sql` in SQL editor
+- [x] Run `db/schema-audit.sql` in SQL editor
 - [x] Update Supabase URL + anon key in `docs/app.js`
+- [ ] Create GitHub repo `dbaprojects/padel` and push
+- [ ] Enable GitHub Pages on `docs/` folder
 - [ ] Create GitHub repo `dbaprojects/padel` and push
 - [ ] Enable GitHub Pages on `docs/` folder
 
