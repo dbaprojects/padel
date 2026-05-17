@@ -1110,27 +1110,16 @@ function buildPlayerBannerHtml() {
       <div class="myhc-header">
         <div style="flex:1;min-width:0">
           <div class="myhc-name">${esc(_playerModalName)}</div>
-          ${rankStr ? `<div class="myhc-rank">${rankStr}</div>` : ''}
-        </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div class="myhc-big">${hc ?? '\u2013'}</div>
-          <div style="font-size:10px;color:rgba(255,255,255,.45)">handicap</div>
         </div>
       </div>
-      ${commentHtml ? `<div style="margin-top:6px;font-size:13px;font-weight:700">${commentHtml}</div>` : ''}
       <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.55);margin-top:2px">Played ${_playerSignupCount12m} sessions (12m)</div>
     </div>`;
 }
 
 function renderPlayerModal() {
-  const tabs = [['hc','Handicap'],['attendance','Attendance']];
-  const tabBtns = tabs.map(([t, lbl]) =>
-    `<button class="pm-tab-btn${_playerModalTab === t ? ' active' : ''}" data-tab="${t}"
-      onclick="switchPlayerTab('${t}')">${lbl}</button>`
-  ).join('');
+  _playerModalTab = 'attendance';
   document.getElementById('player-view-wrap').innerHTML = `
     ${buildPlayerBannerHtml()}
-    <div class="pm-tabs">${tabBtns}</div>
     <div id="pm-tab-content"></div>`;
   renderPlayerTabContent();
 }
@@ -1853,12 +1842,7 @@ function renderHome(upcomingEvents, hcTrend, sectionStats, latestHof, pendingCou
         <div style="flex:1;min-width:0">
           <div class="myhc-name">${fullName}</div>
         </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div class="myhc-big">${hc ?? '–'}</div>
-          <div style="font-size:10px;color:rgba(255,255,255,.45)">handicap</div>
-        </div>
       </div>
-      ${commentHtml ? `<div style="margin-top:6px;font-size:13px;font-weight:700">${commentHtml}</div>` : ''}
       <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.55);margin-top:2px">Played ${myAttendance12m} sessions (12m)</div>
       <div class="home-card-link">View full history →</div>
     </div>`;
@@ -2011,7 +1995,7 @@ function renderHome(upcomingEvents, hcTrend, sectionStats, latestHof, pendingCou
     </div>`;
   }
 
-  document.getElementById('home-grid').innerHTML = meCard + signupCard + ladderCard + hofCard + adminCard + auditCard;
+  document.getElementById('home-grid').innerHTML = meCard + signupCard + hofCard + adminCard + auditCard;
 }
 
 function navTo(view, callback) {
@@ -2573,7 +2557,7 @@ function renderPlayersTable() {
             <div class="pc-row1" style="margin-bottom:0">
               <div class="pc-name">${esc(p.first_name)} ${esc(p.last_name)}${statusTag}${roleLabel}</div>
               <span class="pc-phone">${esc(p.phone || '')}</span>
-              <span class="hcap-badge">${p.current_handicap ?? '–'}</span>
+
             </div>
             ${pending ? `<div class="pc-row2"><div class="btn-actions">
               <button class="btn-icon-sm" onclick="event.stopPropagation();approvePlayer('${p.id}')">Approve</button>
@@ -2616,7 +2600,7 @@ function openAddPlayerForm() {
         <input type="tel" id="fp-phone" class="phone-local" placeholder="9123 4567" autocomplete="off" inputmode="numeric">
       </div>
     </div>
-    <div class="form-group"><label>Handicap</label><input type="number" id="fp-hcap" min="-35" max="10" step="0.5"></div>
+
     <div class="form-group"><label><input type="checkbox" id="fp-admin"> Admin</label></div>
     ${ST.player.is_super_admin ? `<div class="form-group"><label><input type="checkbox" id="fp-super-admin"> Super Admin</label></div>` : ''}
     <div style="text-align:right;margin-top:8px">
@@ -2630,7 +2614,7 @@ async function submitAddPlayer() {
     last_name:        document.getElementById('fp-last').value.trim(),
     is_admin:         document.getElementById('fp-admin').checked,
     is_super_admin:   document.getElementById('fp-super-admin')?.checked ?? false,
-    current_handicap: parseFloat(document.getElementById('fp-hcap').value) || null,
+
     phone:            buildPhone(document.getElementById('fp-dialcode').value, document.getElementById('fp-phone').value),
     active:           true
   };
@@ -2671,13 +2655,7 @@ function openEditPlayerForm(id) {
     </div>
     <div class="form-group"><label><input type="checkbox" id="ep-admin" ${p.is_admin ? 'checked' : ''}> Admin</label></div>
     ${ST.player.is_super_admin ? `<div class="form-group"><label><input type="checkbox" id="ep-super-admin" ${p.is_super_admin ? 'checked' : ''} ${saLocked ? 'disabled' : ''}> Super Admin${saLocked ? ` <span style="font-size:11px;color:#aaa">${saNote}</span>` : ''}</label></div>` : ''}
-    <div class="form-group">
-      <label>Handicap</label>
-      <div style="display:flex;align-items:center;gap:10px">
-        <span class="hcap-badge" style="font-size:15px;padding:4px 12px">${hcDisplay}</span>
-        <button type="button" class="btn-icon-sm" onclick="closeFormModal();openHandicapModal('${id}','${esc(p.first_name)} ${esc(p.last_name)}')">Edit HC</button>
-      </div>
-    </div>
+
     <div class="form-group">
       <label>Status</label>
       <div style="display:flex;align-items:center">${activeLabel}${toggleBtn}</div>
