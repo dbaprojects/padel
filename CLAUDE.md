@@ -28,19 +28,19 @@ Update this file after every non-trivial change.
 
 ## Supabase credentials
 
-⚠️  **Not yet configured** — create a new Supabase project and update these in `docs/app.js`:
-- Replace `SUPABASE_URL_PLACEHOLDER` with the project URL
-- Replace `SUPABASE_ANON_KEY_PLACEHOLDER` with the anon/publishable key
+- **URL:** `https://zrwpjecfswmyqbtaujnb.supabase.co`
+- **Anon key:** `sb_publishable_qQ96tYAR9162_2qDBm49QQ_8Gzt5vhs` (safe to be in client code)
+- **Service role key:** stored in memory only — used for seed scripts, never committed
 
 ---
 
 ## Setup checklist
 
-- [ ] Create Supabase project
+- [x] Create Supabase project
 - [ ] Run `db/schema-supabase.sql` in SQL editor
 - [ ] Run `db/schema-hof.sql` in SQL editor
 - [ ] Run `db/schema-audit.sql` in SQL editor
-- [ ] Update Supabase URL + anon key in `docs/app.js`
+- [x] Update Supabase URL + anon key in `docs/app.js`
 - [ ] Create GitHub repo `dbaprojects/padel` and push
 - [ ] Enable GitHub Pages on `docs/` folder
 

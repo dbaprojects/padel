@@ -99,8 +99,8 @@ function footerInstall() {
 // ── Supabase client ───────────────────────────────────────────────────────
 const { createClient } = window.supabase;
 const sb = createClient(
-  'SUPABASE_URL_PLACEHOLDER',
-  'SUPABASE_ANON_KEY_PLACEHOLDER'
+  'https://zrwpjecfswmyqbtaujnb.supabase.co',
+  'sb_publishable_qQ96tYAR9162_2qDBm49QQ_8Gzt5vhs'
 );
 
 // ── State ─────────────────────────────────────────────────────────────────
