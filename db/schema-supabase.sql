@@ -1,5 +1,5 @@
 -- Run in Supabase SQL editor
--- Full schema + RLS for Squash Club app
+-- Full schema + RLS for BC Padel Section app
 
 CREATE TABLE IF NOT EXISTS players (
   id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),

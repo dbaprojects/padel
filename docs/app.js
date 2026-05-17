@@ -1,4 +1,4 @@
-/* app.js — Squash Club SPA (Supabase, phone login) */
+/* app.js — BC Padel Section SPA (Supabase, phone login) */
 'use strict';
 
 // ── Version guard — forces hard reload when app updates ───────────────────
