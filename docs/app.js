@@ -4,9 +4,9 @@
 // ── Version guard — forces hard reload when app updates ───────────────────
 const APP_VERSION = '1.0';
 (function() {
-  const stored = localStorage.getItem('_app_ver');
+  const stored = localStorage.getItem('padel_app_ver');
   if (stored !== APP_VERSION) {
-    localStorage.setItem('_app_ver', APP_VERSION);
+    localStorage.setItem('padel_app_ver', APP_VERSION);
     // Guard against reload loop: only skip if URL already has THIS exact version
     if (!location.search.includes('_cb=' + APP_VERSION)) {
       location.replace(location.pathname + '?_cb=' + APP_VERSION);
@@ -32,7 +32,7 @@ function isStandalone() {
 function showInstallBanner() {
   if (isStandalone()) return;
   if (!isMobile()) return;
-  if (localStorage.getItem('pwa_dismissed')) return;
+  if (localStorage.getItem('padel_pwa_dismissed')) return;
 
   const isIOS     = /iPad|iPhone|iPod/i.test(navigator.userAgent) && !window.MSStream;
   const canNative = !!deferredInstallPrompt;
@@ -64,7 +64,7 @@ function showInstallBanner() {
 }
 
 function dismissInstallBanner() {
-  localStorage.setItem('pwa_dismissed', '1');
+  localStorage.setItem('padel_pwa_dismissed', '1');
   document.getElementById('pwa-banner').classList.add('hidden');
 }
 
