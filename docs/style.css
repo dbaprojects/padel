@@ -202,7 +202,7 @@ header {
   padding: 36px 16px 30px;
   background:
     linear-gradient(rgba(10,18,52,0.62) 0%, rgba(10,18,52,0.48) 100%),
-    url(banner01.png) center/cover no-repeat;
+    url(banner01.png?v=1.4) center/cover no-repeat;
   color: #fff;
   position: sticky;
   top: 0;
