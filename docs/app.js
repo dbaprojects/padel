@@ -2,7 +2,7 @@
 'use strict';
 
 // ── Version guard — forces hard reload when app updates ───────────────────
-const APP_VERSION = '1.12';
+const APP_VERSION = '1.13';
 (function() {
   const stored = localStorage.getItem('padel_app_ver');
   if (stored !== APP_VERSION) {
@@ -2406,7 +2406,8 @@ const DIAL_CODES = [
   { code: '84',  name: 'Vietnam'     },
 ];
 
-let allPlayers    = [];
+let allPlayers       = [];
+let playerLoginCounts = {};
 let playersFilter = { status: 'active', search: '', sortBy: 'name', sortDir: 'asc', role: 'all' };
 
 function dialCodeOptions(selected = '65') {
@@ -2481,9 +2482,16 @@ function buildPhone(dialCode, localNumber) {
 }
 
 async function renderPlayersTab() {
-  const { data } = await sb.from('players').select('*').order('last_name').order('first_name');
+  const [{ data }, { data: loginRows }] = await Promise.all([
+    sb.from('players').select('*').order('last_name').order('first_name'),
+    sb.from('audit_log').select('player_id').in('event_type', ['session_start', 'session_resume']).not('player_id', 'is', null)
+  ]);
   allPlayers = data || [];
   ST.players = allPlayers.filter(p => p.active);
+  playerLoginCounts = {};
+  for (const r of (loginRows || [])) {
+    playerLoginCounts[r.player_id] = (playerLoginCounts[r.player_id] || 0) + 1;
+  }
   renderPlayersTable();
   document.getElementById('btn-add-player').onclick = openAddPlayerForm;
 }
@@ -2561,6 +2569,7 @@ function renderPlayersTable() {
   document.getElementById('players-list').innerHTML = players.length
     ? `<div class="player-cards">
         <div class="pc-sort-hdr">
+          <span style="font-size:12px;color:#64748b;font-weight:500">${players.length} player${players.length !== 1 ? 's' : ''}</span>
           <span class="th-sort" onclick="setPlayersSort('name')">Name ${arrow('name')}</span>
           <span class="th-sort" onclick="setPlayersSort('hc')">HC ${arrow('hc')}</span>
         </div>
@@ -2572,11 +2581,12 @@ function renderPlayersTable() {
           const statusTag = pending
             ? ' <span class="tag-pending">Pending</span>'
             : !p.active ? ' <span class="tag-inactive">Inactive</span>' : '';
+          const logins = playerLoginCounts[p.id] || 0;
           return `<div class="player-card" onclick="openEditPlayerForm('${p.id}')" style="cursor:pointer">
             <div class="pc-row1" style="margin-bottom:0">
               <div class="pc-name">${esc(p.first_name)} ${esc(p.last_name)}${statusTag}${roleLabel}</div>
               <span class="pc-phone">${esc(p.phone || '')}</span>
-
+              <span class="pc-logins" title="Total logins">${logins > 0 ? logins + '×' : '–'}</span>
             </div>
             ${pending ? `<div class="pc-row2"><div class="btn-actions">
               <button class="btn-icon-sm" onclick="event.stopPropagation();approvePlayer('${p.id}')">Approve</button>
