@@ -2,7 +2,7 @@
 'use strict';
 
 // ── Version guard — forces hard reload when app updates ───────────────────
-const APP_VERSION = '1.2';
+const APP_VERSION = '1.3';
 (function() {
   const stored = localStorage.getItem('padel_app_ver');
   if (stored !== APP_VERSION) {
