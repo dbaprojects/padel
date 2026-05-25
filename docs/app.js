@@ -2088,7 +2088,7 @@ function eventCard(ev) {
   const confirmedNames = confirmed.map(s => {
     const name = s.player_first ? esc(shortName(s.player_first, s.player_last)) : esc(s.guest_name || 'Guest');
     const del  = isAdmin
-      ? `<button class="chip-del" onclick="event.stopPropagation();removeSignupChip('${s.id}','${ev.id}')" title="Remove">×</button>`
+      ? `<button class="chip-del" onclick="event.stopPropagation();removeSignupChip('${s.id}','${ev.id}','${name.replace(/'/g, '&#39;')}')" title="Remove">×</button>`
       : '';
     return `<span class="ev-name-item">${name}${del}</span>`;
   }).join('');
@@ -2096,7 +2096,7 @@ function eventCard(ev) {
   const reserveNames = reserves.length ? reserves.map(s => {
     const name = s.player_first ? esc(shortName(s.player_first, s.player_last)) : esc(s.guest_name || 'Guest');
     const del  = isAdmin
-      ? `<button class="chip-del" onclick="event.stopPropagation();removeSignupChip('${s.id}','${ev.id}')" title="Remove">×</button>`
+      ? `<button class="chip-del" onclick="event.stopPropagation();removeSignupChip('${s.id}','${ev.id}','${name.replace(/'/g, '&#39;')}')" title="Remove">×</button>`
       : '';
     return `<span class="ev-name-item ev-name-reserve">${name}${del}</span>`;
   }).join('') : '';
@@ -2188,7 +2188,8 @@ async function leaveEvent(e, signupId, eventId) {
   } catch (err) { alert(err.message); }
 }
 
-async function removeSignupChip(signupId, eventId) {
+async function removeSignupChip(signupId, eventId, name) {
+  if (!confirm(`Remove ${name ? name + ' ' : ''}from this session?`)) return;
   try {
     const { error } = await sb.from('signups').delete().eq('id', signupId);
     if (error) throw error;
