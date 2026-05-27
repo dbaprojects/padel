@@ -2,9 +2,9 @@
 
 ## Project identity
 - **Name:** BC Padel Section — Booking & Scheduling Manager
-- **Owner:** David Barkess — personal project
+- **Owner:** Club admin — personal project
 - **Purpose:** Court session booking, player management, weekly schedule management, Hall of Fame
-- **Location:** `C:\Users\I061437\OneDrive\Projects\Padel`
+- **Location:** `[local project directory]`
 - **Current version:** v1.0
 - **Production URL:** GitHub Pages (static, `docs/` folder)
 - **Based on:** BC Squash Section app (forked v4.72)
@@ -28,8 +28,8 @@ Update this file after every non-trivial change.
 
 ## Supabase credentials
 
-- **URL:** `https://zrwpjecfswmyqbtaujnb.supabase.co`
-- **Anon key:** `sb_publishable_qQ96tYAR9162_2qDBm49QQ_8Gzt5vhs` (safe to be in client code)
+- **URL:** `[redacted — see app.js]`
+- **Anon key:** `[redacted — see app.js]` (safe to be in client code)
 - **Service role key:** stored in memory only — used for seed scripts, never committed
 
 ---
